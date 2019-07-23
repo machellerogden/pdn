@@ -8,6 +8,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
+  "repository": {
+      "type": "git",
+      "url": "git@github.com:machellerogden/pdn.git"
+  },
   "author": "Mac Heller-Ogden",
   "license": "MIT",
   "dependencies": {
