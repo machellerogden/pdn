@@ -4,10 +4,11 @@
 const { EOL } = require('os');
 const { nil, Trampoline } = require('./lib/util');
 const { SyntaxError } = require('./lib/errors');
+const { createNameFactory } = require('./lib/names');
 
-function getArgs(arg, prop, args) {
+function getArgs(arg, type, args) {
     return !arg.startsWith('@')
-        ? [ arg, arg, ...args ]
+        ? [ arg ]
         : [ ...args ];
 }
 
@@ -21,24 +22,26 @@ const isListEnd = v => listEnd.has(v);
 const isWhitespace = v => /[\s\,]/.test(v);
 
 function Reader() {
+    const NameFactory = createNameFactory(); 
 
     const createTokens = Trampoline(function _createTokens(arg) {
+        if (Array.isArray(arg)) return arg.map(createTokens);
         if (typeof arg === 'object') return arg;
         const {
             groups: {
-                prop = 'task',
+                type = 'string',
                 raw
             } = {}
-        } = arg.match(/^@(?<prop>[^\/]+)\/?(?<raw>.+)?/) || {};
+        } = arg.match(/^@(?<type>[^\/]+)\/?(?<raw>.+)?/) || {};
 
         const [
-            name = NameFactory(prop).next(),
+            name = NameFactory(type).next(),
             ...args
-        ] = getArgs(arg, prop, raw
+        ] = getArgs(arg, type, raw
             ? raw.split(':')
             : []);
 
-        return { name, prop, args };
+        return { name, type, args };
     });
 
     function read(input) {

@@ -9,8 +9,8 @@
   },
   "keywords": [],
   "repository": {
-      "type": "git",
-      "url": "git@github.com:machellerogden/pdn.git"
+    "type": "git",
+    "url": "git@github.com:machellerogden/pdn.git"
   },
   "author": "Mac Heller-Ogden",
   "license": "MIT",
