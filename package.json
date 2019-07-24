@@ -15,6 +15,7 @@
   "author": "Mac Heller-Ogden",
   "license": "MIT",
   "dependencies": {
+    "async-stream-generator": "^1.0.3",
     "clipboardy": "^2.1.0",
     "is-ci": "^2.0.0"
   }
