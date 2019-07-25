@@ -22,5 +22,4 @@ if (require.main === module) {
     } catch (e) {
         console.log(e && e.stack || e);
     }
-
 }
