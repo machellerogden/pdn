@@ -2,10 +2,34 @@
 'use strict';
 
 const streamify = require('async-stream-generator');
-const { compile } = require('./lib/compiler');
+const { Compiler } = require('./lib/compiler');
 const { linebreak, intersperse, stringify } = require('./lib/util');
 
+function Reader({ readers } = {}) {
+    const { compile } = Compiler({ readers });
+    function read(data) {
+        const input = data[Symbol.asyncIterator]
+            ? input
+            : Array.isArray(data)
+                ? data.values()
+                : [ data ].values();
+        return compile(linebreak(input));
+    }
+    return { read };
+}
+
+function read(data = '', { readers } = {}) {
+    const { read } = Reader({ readers });
+    return read(data);
+}
+
+module.exports = {
+    Reader,
+    read
+}
+
 if (require.main === module) {
+    const { compile } = Compiler();
     if (process.stdin.isTTY) {
         if (process.argv[2] == null) {
             return require('repl').start({
