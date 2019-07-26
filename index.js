@@ -7,7 +7,7 @@ const {
     linebreak,
     intersperse,
     stringify,
-    compose
+    pipe
 } = require('./lib/util');
 
 function Reader({ readers } = {}) {
@@ -36,14 +36,24 @@ module.exports = {
 if (require.main === module) {
     const { compile } = Compiler();
 
-    const processInputStream = compose(streamify, linebreak, stringify, compile);
+    const processInputStream = pipe(compile, stringify, linebreak, streamify);
 
     if (process.stdin.isTTY) {
+        const { EOL } = require('os');
 
         return process.argv[2] == null
             ? require('repl').start({
-                input: processInputStream(process.stdin),
-                output: process.stdout
+                eval: (cmd, context, filename, callback) => {
+                    async function expand(iter) {
+                        const acc = [];
+                        for await (const v of iter) {
+                            acc.push(v);
+                        }
+                        return { __eval_results__: acc };
+                    }
+                    pipe(read, expand)(cmd).then(value => callback(null, value));
+                },
+                writer: ({ __eval_results__ }) => __eval_results__.map(v => require('util').inspect(v, { depth: null, colors: true })).join(EOL)
             })
             : processInputStream(intersperse(' ', process.argv.slice(2)).values()).pipe(process.stdout);
     }
