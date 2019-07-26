@@ -1,6 +1,6 @@
 # PDN
 
-> a data specification and reader implementation
+> a data format specification and reader implementation
 
 ## Design Goal
 
