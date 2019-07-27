@@ -1,31 +1,34 @@
 # PDN
 
-> POSIX-friendly Data Notation [pee-dee-en]
+> Pragmatic Data Notation
 
 Herein you will find the data format specification for PDN. You will also find here a Node.js reader implementation which can be used as the canonical reference for further implementations.
 
 # Design Goals
 
-PDN aims to be:
+First and foremost, PDN is intended to provide a simple notation for stating well-structured data within restrictive interpreters such as a command-line interface.
 
-* a simple data notation for stating well-structured data in command-line arguments
+Additionally, PDN aims to be:
+
 * a robust data notation that is a superset of JSON
 * a streamable data notation which does not require an enclosing element at the top-level
 * an extendable data notation which allows for macro dispatch via tagged elements
 
+Note: PDN is NOT a superset of edn and does not intend to compete with edn. If you need edn, use edn.
+
 # Rationale
 
-Manual data entry from the command-line using most popular data specifications requires use of strong quotes (`'`) to avoid interpretation of reserved shell characters.
+Most command-line interfaces (CLIs) implement support for a set of flag (i.e. `-f`) and option (i.e. `--env`) arguments in order to gather basic data from the user. For more complex input, data files sources are often leveraged. This approach is fine for the vast majority of use cases but there exists a subset of command-line use-cases wherein it is desirable for the user to be able to state well-structured directly within command-line arguments. Many CLIs for interfacing with complex systems end up providing a set of "advanced" options the value of which is directly stated data in a common notation, such as JSON. Typing JSON from a command-line is tedious and error-prone.
 
-Additionally, manually entering complex data is cumbersome. So much so, in fact, that most command-line interfaces (CLIs) opt to add flags for every command option instead of requiring the user to specify options as well-structure data.
+Manual data entry from the command-line using most popular data notations requires use of strong quotes (`'`) to avoid interpretation of reserved shell characters. Futhermore, entering data at the command-line using most popular data notations, such as JSON, can be tedious and error-prone.
+
+PDN seeks to provide an alternative notation which makes manual entry easier and which can easily be extended by implementors in order to further streamline the data entry experience.
 
 If stating well-structure from the command-line were made easier, perhaps more CLIs would opt for a more data-oriented interface.
 
-PDN offers a format specification and reader implementation which seeks to provide a possible path forward.
-
 # Spec
 
-PDN is in part inspired by EDN and as such, much of the PDN specification which follows was lifted directly from the [edn](https://github.com/edn-format/edn) README. Like edn, the specification is casual. Unlike edn, a formal BNF will likely never be provided.
+PDN is in part inspired by edn and as such, much of the PDN specification which follows was lifted directly from the [edn](https://github.com/edn-format/edn) README. Like edn, the specification is casual. Unlike edn, a formal BNF will likely never be provided.
 
 ## General considerations
 
@@ -33,11 +36,11 @@ PDN elements, streams and files should be encoded using UTF-8.
 
 Elements are generally separated by whitespace. Whitespace, other than within strings, is not otherwise significant, nor need redundant whitespace be preserved during transmissions. Commas , are also considered whitespace, other than within strings.
 
-The delimiters { } ( ) [ ] need not be separated from adjacent elements by whitespace.
+The delimiters `{` `}` `(` `)` `[` `]` need not be separated from adjacent elements by whitespace.
 
 ### @ dispatch character
 
-Tokens beginning with @ are reserved. The character following @ determines the behavior. The dispatch for @alphabetic-char (tag) is defined below. @ is not a delimiter.
+Tokens beginning with `@` are reserved. The character following `@` determines the behavior. The dispatch for @alphabetic-char (tag) is defined below. `@` is not a delimiter.
 
 ## Built-in elements
 
@@ -63,17 +66,17 @@ There is no support for characters separate from that of strings.
 
 #### symbols
 
-Symbols are used to represent identifiers, and should map to something other than strings, if possible.
+Unlike edn, PDN does not have full support for symbols. In PDN, symbols map to strings. Symbols in PDN simply offer a more terse way to express a string value when the character set of the string is such that it does not require quoting.
 
 Symbols begin with a non-numeric character and can contain alphanumeric characters and . * + ! - _ ? $ % & = < >. If -, + or . are the first character, the second character (if any) must be non-numeric. Additionally, `:` `@` are allowed as constituent characters in symbols other than as the first character.
 
-If a symbol ends with `^` then it will be appended with a suffix which ensures it has a unique name. The suffix is of the format `-{n}` where `n` is an integer which increments as other symbols of the same name are generated.
+If a symbol ends with `^` then it will be appended with a suffix which ensures it has a unique name. This is similar to the gensym behaviour of clojure macros (which instead use the `#` suffix). The generated suffix is of the format `-{n}` where `n` is an integer which increments as other symbols of the same name are generated.
 
 > Note: The reference implementation contained in this repository will represent symbols as javascript or JSON string values. Additionally, the current implementation does not yet support all of the characters indicated in the above specification.
 
 #### keywords
 
-There is currently no specification for a special keyword or enumeration value separate from strings or symbols.
+Unlike edn, PDN does not currently specify a special keyword or enumeration value separate from strings or symbols.
 
 #### integers
 
@@ -81,7 +84,7 @@ Integers consist of the digits 0 - 9, optionally prefixed by - to indicate a neg
 
 #### floating point numbers
 
-Floating point numbers should be supported.
+Floating point numbers are supported.
 
 #### arrays
 
@@ -126,10 +129,83 @@ Tags themselves are not elements. It is an error to have a tag without a corresp
 
 `@obj`
 
+`@obj` before any sequence will transform that sequence into an object representation.
+
 ##### comments
 
-If a `^` character is encountered outside of a string, that character and all subsequent characters to the next newline should be ignored.
+If a `^` character is encountered outside of a string or symbol, that character and all subsequent characters to the next newline should be ignored.
 
 ## Reference Implementation
 
+Contained in this repository is a robust reference implementation.
+
+### Requirements
+
+* Node.js v12+
+
+_Note: Node.js v10+ will work but will emit Experiemental Feature warnings due to how stream implementation has been written with language features which are only fully supported in Node.js v12+._
+
+### Global Install
+
+```
+npm i -g pdn
+```
+
+### Local Install (as a project dependency)
+
+```
+npm i pdn
+```
+
+### Command-Line Usage
+
+#### Read to JSON from command-line arguments
+
+```sh
+> pdn foo 123
+"foo"
+123
+> pdn [foo,123]
+["foo" 123]
+> pdn [:foo,123]
+{"foo":123}
+> pdn [foo^,foo^[:foo^,foo^]]
+["foo-1","foo-2",{"foo-3":"foo-4"}]
+```
+
+#### Read to JSON from stdin
+
+```sh
+> echo foo 123 | pdn 
+"foo"
+123
+> echo [foo,123] | pdn
+["foo" 123]
+> echo [:foo,123] | pdn
+{"foo":123}
+> echo [foo^,foo^[:foo^,foo^]] | pdn
+["foo-1","foo-2",{"foo-3":"foo-4"}]
+```
+
+#### Read to JSON in REPL
+
+```sh
+> pdn
+> foo 123
+"foo"
+123
+> [foo,123]
+["foo" 123]
+> [:foo,123]
+{"foo":123}
+> [foo^,foo^[:foo^,foo^]]
+["foo-1","foo-2",{"foo-3":"foo-4"}]
+```
+
+### Programmatic Usage / API
+
 TODO
+
+# License
+
+MIT
