@@ -24,7 +24,7 @@ Manual data entry from the command-line using most popular data notations requir
 
 PDN seeks to provide an alternative notation which makes manual entry easier and which can easily be extended by implementors in order to further streamline the data entry experience.
 
-If stating well-structure from the command-line were made easier, perhaps more CLIs would opt for a more data-oriented interface.
+If stating well-structured data from the command-line were made easier, perhaps more CLIs would opt for a more data-oriented interface.
 
 # Spec
 
