@@ -22,7 +22,7 @@ const input = '[:foo:123,bar:true,baz:nil]';
     }
     // => { foo: 123, bar: true, baz: null }
     //
-    for await (const result of read('@join [foo bar baz]', { readers: { join: el => el.join('') }})) {
+    for await (const result of read('@join [foo bar baz]', { readers: { join: el => el.join('') } })) {
         console.log(result);
     }
     // => foobarbaz
