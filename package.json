@@ -5,9 +5,20 @@
   "bin": "index.js",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "ava test/*.spec.js",
+    "generate-docs": "jsdoc2md --template README.hbs --files ./lib/reader.js > README.md",
+    "clean-check": "git diff --exit-code 2>/dev/null && git diff --cached --exit-code 2>/dev/null || echo 'Please commit changes before publishing.'",
+    "prepare": "npm run test && npm run generate-docs && npm run clean-check"
   },
-  "keywords": [],
+  "keywords": [
+    "reader",
+    "data",
+    "notation",
+    "spec",
+    "specification",
+    "edn",
+    "json"
+  ],
   "repository": {
     "type": "git",
     "url": "git@github.com:machellerogden/pdn.git"
@@ -18,5 +29,13 @@
     "async-stream-generator": "^1.0.3",
     "clipboardy": "^2.1.0",
     "is-ci": "^2.0.0"
-  }
+  },
+  "devDependencies": {
+    "ava": "^2.2.0",
+    "jsdoc-to-markdown": "^5.0.0",
+    "pre-commit": "^1.2.2"
+  },
+  "precommit": [
+      "test"
+  ]
 }
