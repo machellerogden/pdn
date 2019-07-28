@@ -58,7 +58,7 @@ If a platform has canonic values for true and false, it is a further semantic of
 
 Strings are enclosed in either "double quotes" or 'single quotes'. May span multiple lines. Escape characters `\t`, `\r`, `\n`, `\\`, `\"` and `\'` are supported.
 
-> Note: The reference implementation contained in this repository only supports the `\"` and `\'` escape characters.
+> Note: The reference implementation contained in this repository currently only supports the `\"` and `\'` escape characters.
 
 #### characters
 
@@ -95,15 +95,15 @@ An array is a sequence of values that supports random access. Arrays are represe
 
 #### objects
 
-A map is a collection of associations between keys and values. Maps are represented by zero or more key and value pairs enclosed in curly braces `{}` or with a special notation using square brackets or parenthese wherein the open element of the balance group is immediatedly followed by a colon `:`. Each key should appear at most once. No semantics should be associated with the order in which the pairs appear.
+An object is a collection of associations between keys and values. Object are represented by zero or more key and value pairs enclosed in curly braces `{}` or with a special notation using square brackets or parenthese wherein the opening element of the balance group is immediatedly followed by a colon `:`. Each key should appear at most once. No semantics should be associated with the order in which the pairs appear.
 
 ```
-{a 1, "foo" bar, [1 2 3] four}
-[:a 1, "foo" bar, [1 2 3] four]
-(:a 1, "foo" bar, [1 2 3] four)
+{a:1,foo:bar}
+[:a:1,foo:bar]
+(:a:1,foo:bar)
 ```
 
-Note that keys and values can be elements of any type. The use of commas above is optional, as they are parsed as whitespace.
+Note that if keys are not stated as strings, the reader should attempt to coerced the value to a string representation. The use of commas and colons above is optional, as they are parsed as whitespace.
 
 #### tagged elements
 
