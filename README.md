@@ -204,7 +204,7 @@ npm i pdn
 
 <a name="read"></a>
 
-## read(input) ⇒ <code>AsyncIterator</code>
+## read(input, [options]) ⇒ <code>AsyncIterator</code>
 Accepts a ReadableStream, an AsyncIterator, an array or a string and returns an AsyncIterator.
 
 **Kind**: global function  
@@ -213,6 +213,7 @@ Accepts a ReadableStream, an AsyncIterator, an array or a string and returns an 
 | Param | Type | Description |
 | --- | --- | --- |
 | input | <code>ReadableStream</code> \| <code>AsyncIterator</code> \| <code>Array</code> \| <code>string</code> | Raw input data |
+| [options] | <code>Object</code> | Optional options object. Currently only used for specifying custom readers for tag dipatch. |
 
 **Example**  
 ```js
@@ -220,10 +221,15 @@ for await (const result of read('[:foo:123,bar:true,baz:nil]')) {
     console.log(result);
 }
 // => { foo: 123, bar: true, baz: null }
+
+for await (const result of read('@join [foo bar baz]', { readers: { join: el => el.join('') }})) {
+    console.log(result);
+}
+// => foobarbaz
 ```
 <a name="readToStream"></a>
 
-## readToStream(input) ⇒ <code>WritableStream</code>
+## readToStream(input, [options]) ⇒ <code>WritableStream</code>
 Accepts a ReadableStream, an array or a string and returns a WritableStream. Stream output will be utf-8 text. Stream values will be delimited by a system-native newline escape character.
 
 **Kind**: global function  
@@ -232,6 +238,7 @@ Accepts a ReadableStream, an array or a string and returns a WritableStream. Str
 | Param | Type | Description |
 | --- | --- | --- |
 | input | <code>ReadableStream</code> \| <code>AsyncIterator</code> \| <code>Array</code> \| <code>string</code> | Raw input data |
+| [options] | <code>Object</code> | Optional options object. Currently only used for specifying custom readers for tag dipatch. |
 
 **Example**  
 ```js
@@ -240,7 +247,7 @@ readToStream('[:foo:123,bar:true,baz:nil]').pipe(process.stdout);
 ```
 <a name="readOne"></a>
 
-## readOne(input) ⇒ <code>Promise</code>
+## readOne(input, [options]) ⇒ <code>Promise</code>
 Accepts a ReadableStream, an AsyncIterator, an array or a string and returns a Promise which resolves to the first value of the stream.
 
 **Kind**: global function  
@@ -249,6 +256,7 @@ Accepts a ReadableStream, an AsyncIterator, an array or a string and returns a P
 | Param | Type | Description |
 | --- | --- | --- |
 | input | <code>ReadableStream</code> \| <code>AsyncIterator</code> \| <code>Array</code> \| <code>string</code> | Raw input data |
+| [options] | <code>Object</code> | Optional options object. Currently only used for specifying custom readers for tag dipatch. |
 
 **Example**  
 ```js
@@ -257,7 +265,7 @@ console.log(await readOne('[:foo:123,bar:true,baz:nil]'));
 ```
 <a name="readAll"></a>
 
-## readAll(input) ⇒ <code>Promise</code>
+## readAll(input, [options]) ⇒ <code>Promise</code>
 Accepts a ReadableStream, an AsyncIterator, an array or a string and returns a Promise which resolves to an array of all values.
 
 Note: If a stream or iterator is passed to `readAll` and it does not complete, the Promise returned by this function will never resolve.
@@ -268,6 +276,7 @@ Note: If a stream or iterator is passed to `readAll` and it does not complete, t
 | Param | Type | Description |
 | --- | --- | --- |
 | input | <code>ReadableStream</code> \| <code>AsyncIterator</code> \| <code>Array</code> \| <code>string</code> | Raw input data |
+| [options] | <code>Object</code> | Optional options object. Currently only used for specifying custom readers for tag dipatch. |
 
 **Example**  
 ```js
