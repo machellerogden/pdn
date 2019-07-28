@@ -68,7 +68,7 @@ There is no support for characters separate from that of strings.
 
 Unlike edn, PDN does not have full support for symbols. In PDN, symbols map to strings. Symbols in PDN simply offer a more terse way to express a string value when the character set of the string is such that it does not require quoting.
 
-Symbols begin with an alphabetic character. Allowed character after the first character are `.` `*` `+` `!` `-` `_` `?` `$` `%` `&` `=` `<` `>` `@`.
+Symbols begin with an alphabetic character. Allowed characters after the first character are: `.` `*` `+` `!` `-` `_` `?` `$` `%` `&` `=` `<` `>` `@`.
 
 If a symbol ends with `^` then it will be appended with a suffix which ensures it has a unique name. This is similar to the gensym behaviour of clojure macros (which instead use the `#` suffix). The generated suffix is of the format `-{n}` where `n` is an integer which increments as other symbols of the same name are generated.
 
