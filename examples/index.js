@@ -4,22 +4,48 @@ const {
     Reader,
     read,
     readToStream,
-    readOne
+    readOne,
+    readAll
 } = require('..');
 
-const data = '[:foo:123,bar:true,baz:nil]';
+const input = '[:foo:123,bar:true,baz:nil]';
 
 (async () => {
 
-    // `read` accepts a ReadableStream, an AsyncIterator, an array or a string and returns an AsyncIterator.
-    for await (const result of read(data)) {
+    /**
+     * `read`
+     *
+     * Accepts a ReadableStream, an AsyncIterator, an array or a string and returns an AsyncIterator.
+     */
+    for await (const result of read(input)) {
         console.log(result);
     }
+    // => { foo: 123, bar: true, baz: null }
 
-    // `readToStream` accepts a ReadableStream, an array or a string and returns an WritableStream.
-    readToStream(data).pipe(process.stdout);
+    /**
+     * `readOne`
+     *
+     * Accepts a ReadableStream, an AsyncIterator, an array or a string and returns a Promise which resolves to the first value of the stream.
+     */
+    console.log(await readOne(input));
+    // => { foo: 123, bar: true, baz: null }
 
-    // `readOne` accepts a ReadableStream, an AsyncIterator, an array or a string and returns a Promise which resolves to the first value of the stream.
-    console.log(await readOne(data));
+    /**
+     * `readAll`
+     *
+     * Accepts a ReadableStream, an AsyncIterator, an array or a string and returns a Promise which resolves to an array of all values.
+     *
+     * Note: If a stream or iterator is passed to `readAll` and it does not complete, the Promise returned by this function will never resolve.
+     */
+    console.log(await readAll(input));
+    // => [ { foo: 123, bar: true, baz: null } ]
+
+    /**
+     * `readToStream`
+     *
+     * Accepts a ReadableStream, an array or a string and returns a WritableStream. Stream output will be utf-8 text. Stream values will be delimited by a system-native newline escape character.
+     */
+    readToStream(input).pipe(process.stdout);
+    // => "{\"foo\":123,\"bar\":true,\"baz\":null}"
 
 })();
