@@ -34,7 +34,7 @@ PDN is in part inspired by edn and as such, much of the PDN specification which 
 
 PDN elements, streams and files should be encoded using UTF-8.
 
-Elements are generally separated by whitespace. Whitespace, other than within strings, is not otherwise significant, nor need redundant whitespace be preserved during transmissions. Commas , are also considered whitespace, other than within strings.
+Elements are generally separated by whitespace. Whitespace, other than within strings, is not otherwise significant, nor need redundant whitespace be preserved during transmissions. Commas `,` are also considered whitespace, other than within strings. Colons `:` are also considered whitespace unless immediately proceeding an opening bracket `[` or opening parenthese `(`.
 
 The delimiters `{` `}` `(` `)` `[` `]` need not be separated from adjacent elements by whitespace.
 
@@ -68,11 +68,9 @@ There is no support for characters separate from that of strings.
 
 Unlike edn, PDN does not have full support for symbols. In PDN, symbols map to strings. Symbols in PDN simply offer a more terse way to express a string value when the character set of the string is such that it does not require quoting.
 
-Symbols begin with a non-numeric character and can contain alphanumeric characters and . * + ! - _ ? $ % & = < >. If -, + or . are the first character, the second character (if any) must be non-numeric. Additionally, `:` `@` are allowed as constituent characters in symbols other than as the first character.
+Symbols begin with an alphabetic character. Allowed character after the first character are `.` `*` `+` `!` `-` `_` `?` `$` `%` `&` `=` `<` `>` `@`.
 
 If a symbol ends with `^` then it will be appended with a suffix which ensures it has a unique name. This is similar to the gensym behaviour of clojure macros (which instead use the `#` suffix). The generated suffix is of the format `-{n}` where `n` is an integer which increments as other symbols of the same name are generated.
-
-> Note: The reference implementation contained in this repository will represent symbols as javascript or JSON string values. Additionally, the current implementation does not yet support all of the characters indicated in the above specification.
 
 #### keywords
 
@@ -202,9 +200,11 @@ npm i pdn
 ["foo-1","foo-2",{"foo-3":"foo-4"}]
 ```
 
-### Programmatic Usage / API
+### API
 
-TODO
+```js
+
+```
 
 # License
 
