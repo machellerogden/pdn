@@ -240,11 +240,11 @@ readToStream('[:foo:123,bar:true,baz:nil]').pipe(process.stdout);
 ```
 <a name="readOne"></a>
 
-## readOne(input) ⇒ <code>WritableStream</code>
+## readOne(input) ⇒ <code>Promise</code>
 Accepts a ReadableStream, an AsyncIterator, an array or a string and returns a Promise which resolves to the first value of the stream.
 
 **Kind**: global function  
-**Returns**: <code>WritableStream</code> - Returns a Promise which resolves to the first value of the stream.  
+**Returns**: <code>Promise</code> - Returns a Promise which resolves to the first value of the stream.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -257,13 +257,13 @@ console.log(await readOne('[:foo:123,bar:true,baz:nil]'));
 ```
 <a name="readAll"></a>
 
-## readAll(input) ⇒ <code>WritableStream</code>
+## readAll(input) ⇒ <code>Promise</code>
 Accepts a ReadableStream, an AsyncIterator, an array or a string and returns a Promise which resolves to an array of all values.
 
 Note: If a stream or iterator is passed to `readAll` and it does not complete, the Promise returned by this function will never resolve.
 
 **Kind**: global function  
-**Returns**: <code>WritableStream</code> - Returns a Promise which resolves to an array of all values.  
+**Returns**: <code>Promise</code> - Returns a Promise which resolves to an array of all values.  
 
 | Param | Type | Description |
 | --- | --- | --- |
