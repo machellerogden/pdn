@@ -131,7 +131,7 @@ Tags themselves are not elements. It is an error to have a tag without a corresp
 
 ##### comments
 
-If a `^` character is encountered outside of a string or symbol, that character and all subsequent characters to the next newline should be ignored.
+If a `#` character is encountered outside of a string or symbol, that character and all subsequent characters to the next newline should be ignored.
 
 ## Reference Implementation
 
