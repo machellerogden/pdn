@@ -1,6 +1,6 @@
 {
   "name": "pdn",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "description": "POSIX Data Notation",
   "bin": "index.js",
   "main": "index.js",
@@ -36,6 +36,6 @@
     "pre-commit": "^1.2.2"
   },
   "precommit": [
-      "test"
+    "test"
   ]
 }
