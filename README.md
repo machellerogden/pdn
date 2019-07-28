@@ -141,7 +141,7 @@ Contained in this repository is a robust reference implementation.
 
 * Node.js v12+
 
-_Note: Node.js v10+ will work but will emit Experiemental Feature warnings due to how stream implementation has been written with language features which are only fully supported in Node.js v12+._
+_Note: Node.js v10+ will work but will emit ExperimentalWarning due to how the stream implementation has been written using features which are only officially supported in Node.js v12+._
 
 ### Global Install
 
