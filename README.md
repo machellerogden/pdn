@@ -208,7 +208,11 @@ for await (const result of read('[:foo:123,bar:true,baz:nil]')) {
 }
 // => { foo: 123, bar: true, baz: null }
 
-for await (const result of read('@join [foo bar baz]', { readers: { join: el => el.join('-') } })) {
+for await (const result of read('@join [foo bar baz]', {
+    readers: {
+        join: el => el.join('-')
+    }
+})) {
     console.log(result);
 }
 // => foo-bar-baz
@@ -230,6 +234,13 @@ Accepts a ReadableStream, an array or a string and returns a WritableStream. Str
 ```js
 readToStream('[:foo:123,bar:true,baz:nil]').pipe(process.stdout);
 // => "{\"foo\":123,\"bar\":true,\"baz\":null}"
+
+readToStream('@join [foo bar baz]', {
+    readers: {
+        join: el => el.join('-')
+    }
+}).pipe(process.stdout);
+// => "foo-bar-baz"
 ```
 <a name="readOne"></a>
 
@@ -248,6 +259,13 @@ Accepts a ReadableStream, an AsyncIterator, an array or a string and returns a P
 ```js
 console.log(await readOne('[:foo:123,bar:true,baz:nil]'));
 // => { foo: 123, bar: true, baz: null }
+
+console.log(await readOne('@join [foo bar baz]', {
+    readers: {
+        join: el => el.join('-')
+    }
+}));
+// => foo-bar-baz
 ```
 <a name="readAll"></a>
 
@@ -268,6 +286,13 @@ Note: If a stream or iterator is passed to `readAll` and it does not complete, t
 ```js
 console.log(await readAll('[:foo:123,bar:true,baz:nil]'));
 // => [ { foo: 123, bar: true, baz: null } ]
+
+console.log(await readAll('@join [foo bar baz]', {
+    readers: {
+        join: el => el.join('-')
+    }
+}));
+// => [ foo-bar-baz ]
 ```
 # TODO
 
