@@ -56,25 +56,13 @@ If a platform has canonic values for true and false, it is a further semantic of
 
 #### strings
 
-Strings are enclosed in either "double quotes" or 'single quotes'. May span multiple lines. Escape characters `\t`, `\r`, `\n`, `\\`, `\"` and `\'` are supported.
+Strings may be enclosed in either "double quotes" or 'single quotes'. May span multiple lines. Escape characters `\t`, `\r`, `\n`, `\\`, `\"` and `\'` are supported.
 
 > Note: The reference implementation contained in this repository currently only supports the `\"` and `\'` escape characters.
 
-#### characters
+When the character set of the string is such that it does not require quoting, quotes may be omitted. Unquoted strings must begin with an alphabetic character. Allowed characters after the first character are: `.` `*` `+` `!` `-` `_` `?` `$` `%` `&` `=` `<` `>` `@`.
 
-There is no support for characters separate from that of strings.
-
-#### symbols
-
-Unlike edn, PDN does not have full support for symbols. In PDN, symbols map to strings. Symbols in PDN simply offer a more terse way to express a string value when the character set of the string is such that it does not require quoting.
-
-Symbols begin with an alphabetic character. Allowed characters after the first character are: `.` `*` `+` `!` `-` `_` `?` `$` `%` `&` `=` `<` `>` `@`.
-
-If a symbol ends with `^` then it will be appended with a suffix which ensures it has a unique name. This is similar to the gensym behaviour of clojure macros (which instead use the `#` suffix). The generated suffix is of the format `-{n}` where `n` is an integer which increments as other symbols of the same name are generated.
-
-#### keywords
-
-Unlike edn, PDN does not currently specify a special keyword or enumeration value separate from strings or symbols.
+If an unquoted string ends with `^` then it will be appended with a suffix which ensures it has a unique name. This is similar to the gensym behaviour of clojure macros (which instead use the `#` suffix). The generated suffix is of the format `-{n}` where `n` is an integer which increments as other symbols of the same name are generated.
 
 #### integers
 
