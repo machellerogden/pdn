@@ -1,7 +1,7 @@
 {
   "name": "pdn",
   "version": "0.2.2",
-  "description": "POSIX Data Notation",
+  "description": "POSIX-friendly Data Notation",
   "bin": "index.js",
   "main": "index.js",
   "scripts": {
@@ -37,5 +37,9 @@
   },
   "precommit": [
     "test"
-  ]
+  ],
+  "engines": {
+    "node": ">=10.6.0",
+    "npm": ">=5.0.0"
+  }
 }
