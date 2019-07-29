@@ -58,8 +58,6 @@ If a platform has canonic values for true and false, it is a further semantic of
 
 Strings may be enclosed in either "double quotes" or 'single quotes'. May span multiple lines. Escape characters `\t`, `\r`, `\n`, `\\`, `\"` and `\'` are supported.
 
-> Note: The reference implementation contained in this repository currently only supports the `\"` and `\'` escape characters.
-
 When the character set of the string is such that it does not require quoting, quotes may be omitted. Unquoted strings must begin with an alphabetic character. Allowed characters after the first character are: `.` `*` `+` `!` `-` `_` `?` `$` `%` `&` `=` `<` `>` `@`.
 
 If an unquoted string ends with `^` then it will be appended with a suffix which ensures it has a unique name. This is similar to the gensym behaviour of clojure macros (which instead use the `#` suffix). The generated suffix is of the format `-{n}` where `n` is an integer which increments as other symbols of the same name are generated.
