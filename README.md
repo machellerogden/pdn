@@ -273,9 +273,9 @@ console.log(await readAll('[:foo:123,bar:true,baz:nil]'));
 ```
 # TODO
 
-[ ] support additional escape characters in tokenizer
-[ ] capture token positions and report in SyntaxError messages
-[ ] consider t-expression support
+- [ ] support additional escape characters in tokenizer
+- [ ] capture token positions and report in SyntaxError messages
+- [ ] consider t-expression support
 
 # License
 
