@@ -1,6 +1,6 @@
 # PDN
 
-> Pragmatic Data Notation
+> POSIX-friendly Data Notation
 
 Herein you will find the data format specification for PDN. You will also find here a Node.js reader implementation which can be used as the canonical reference for further implementations.
 
