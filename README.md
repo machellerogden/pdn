@@ -271,6 +271,12 @@ Note: If a stream or iterator is passed to `readAll` and it does not complete, t
 console.log(await readAll('[:foo:123,bar:true,baz:nil]'));
 // => [ { foo: 123, bar: true, baz: null } ]
 ```
+# TODO
+
+[ ] support additional escape characters in tokenizer
+[ ] capture token positions and report in SyntaxError messages
+[ ] consider t-expression support
+
 # License
 
 MIT
