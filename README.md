@@ -56,9 +56,17 @@ If a platform has canonic values for true and false, it is a further semantic of
 
 #### strings
 
-Strings may be enclosed in either "double quotes" or 'single quotes'. May span multiple lines. Escape characters `\t`, `\r`, `\n`, `\\`, `\"` and `\'` are supported.
+Strings may be enclosed in either "double quotes" or 'single quotes' to allow for use of what otherwise might be consider special or reserved characters. May span multiple lines. Escape characters `\t`, `\r`, `\n`, `\\`, `\"` and `\'` are supported.
 
-When the character set of the string is such that it does not require quoting, quotes may be omitted. Unquoted strings must begin with an alphabetic character. Allowed characters after the first character are: `.` `*` `+` `!` `-` `_` `?` `$` `%` `&` `=` `<` `>` `@`.
+_Note: reference implementation does not yet support multi-line strings._
+
+##### unquoted strings
+
+When the character set of the string is such that it does not require quoting, quotes may be omitted.
+
+Unquoted strings must begin with an alphabetic character or one of the following characters: `-` `_` `'` `%` `<` `>` `=` `&` `$` `.` `+` `*` `!` `?` `^`
+
+After the first character in an unquoted string you may use any alphanumeric character as well as the following characters: `-` `_` `'` `%` `<` `>` `=` `&` `$` `.` `+` `*` `!` `?` `@` `^`
 
 If an unquoted string ends with `^` then it will be appended with a suffix which ensures it has a unique name. This is similar to the gensym behaviour of clojure macros (which instead use the `#` suffix). The generated suffix is of the format `-{n}` where `n` is an integer which increments as other symbols of the same name are generated.
 
