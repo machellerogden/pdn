@@ -5,15 +5,10 @@ const {
     Reader,
     read,
     readToStream,
+    readAll,
     readOne
 } = module.exports = require('./lib/reader');
 
 module.exports.GenSym = require('./lib/emitter/name').GenSym;
 
-if (require.main === module) {
-    process.stdin.isTTY
-        ? process.argv[2] == null
-            ? require('./lib/repl').start()
-            : readToStream(process.argv.slice(2).join(' ')).pipe(process.stdout)
-        : readToStream(process.stdin).pipe(process.stdout);
-}
+require('streamface').wrap({ readToStream, readAll, module });
