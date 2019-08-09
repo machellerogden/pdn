@@ -34,7 +34,7 @@ PDN is in part inspired by edn and as such, much of the PDN specification which 
 
 PDN elements, streams and files should be encoded using UTF-8.
 
-Elements are generally separated by whitespace. Whitespace, other than within strings, is not otherwise significant, nor need redundant whitespace be preserved during transmissions. Commas `,` are also considered whitespace, other than within strings. Colons `:` are also considered whitespace unless immediately proceeding an opening bracket `[` or opening parenthese `(`.
+Elements are generally separated by whitespace. Whitespace, other than within strings, is not otherwise significant, nor need redundant whitespace be preserved during transmissions. Commas `,` are also considered whitespace, other than within strings.
 
 The delimiters `{` `}` `(` `)` `[` `]` need not be separated from adjacent elements by whitespace.
 
@@ -64,9 +64,9 @@ _Note: reference implementation does not yet support multi-line strings._
 
 When the character set of the string is such that it does not require quoting, quotes may be omitted.
 
-Unquoted strings must begin with an alphabetic character or one of the following characters: `-` `_` `'` `%` `<` `>` `=` `&` `$` `.` `+` `*` `!` `?` `^`
+Unquoted strings must begin with an alphabetic character or one of the following characters: `-` `_` `'` `%` `<` `>` `=` `&` `$` `.` `+` `*` `!` `?` `^` `:`
 
-After the first character in an unquoted string you may use any alphanumeric character as well as the following characters: `-` `_` `'` `%` `<` `>` `=` `&` `$` `.` `+` `*` `!` `?` `@` `^`
+After the first character in an unquoted string you may use any alphanumeric character as well as the following characters: `-` `_` `'` `%` `<` `>` `=` `&` `$` `.` `+` `*` `!` `?` `@` `^` `:`
 
 If an unquoted string ends with `^` then it will be appended with a suffix which ensures it has a unique name. This is similar to the gensym behaviour of clojure macros (which instead use the `#` suffix). The generated suffix is of the format `-{n}` where `n` is an integer which increments as other symbols of the same name are generated.
 
@@ -92,9 +92,9 @@ An array is a sequence of values that supports random access. Arrays are represe
 An object is a collection of associations between keys and values. Object are represented by zero or more key and value pairs enclosed in curly braces `{}` or with a special notation using square brackets or parenthese wherein the opening element of the balance group is immediatedly followed by a colon `:`. Each key should appear at most once. No semantics should be associated with the order in which the pairs appear.
 
 ```
-{a:1,foo:bar}
-[:a:1,foo:bar]
-(:a:1,foo:bar)
+{a 1,foo bar}
+[:a 1,foo bar]
+(:a 1,foo bar)
 ```
 
 Note that if keys are not stated as strings, the reader should attempt to coerced the value to a string representation. The use of commas and colons above is optional, as they are parsed as whitespace.
@@ -109,7 +109,7 @@ Thus you can build new distinct readable elements out of (and only out of) other
 
 The semantics of a tag, and the type and interpretation of the tagged element are defined by the steward of the tag.
 
-`@mytag {:first "Fred" :last "Mertz"}`
+`@mytag {:first "Fred" last "Mertz"}`
 
 If a reader encounters a tag for which no handler is registered, the implementation can either report an error, call a designated 'unknown element' handler, or create a well-known generic representation that contains both the tag and the tagged element, as it sees fit. Note that the non-error strategies allow for readers which are capable of reading any and all PDN, in spite of being unaware of the details of any extensions present.
 

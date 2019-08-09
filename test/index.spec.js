@@ -11,13 +11,13 @@ foo
 +0
 -0
 [foo,123,-10.00,true,false,nil,foo^,foo^]
-[:foo:123
-  bar:-10.00
-  baz:true
+[:foo 123
+  bar -10.00
+  baz true
   qux[a,b, [c,d,e]]]
-[:foo:123
-  bar:-10.00
-  baz:true
+[:foo 123
+  bar -10.00
+  baz true
   qux[a,b, @join [c,d,e]]]
 `;
     const expected = [
