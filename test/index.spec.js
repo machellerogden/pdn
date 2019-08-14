@@ -26,7 +26,7 @@ foo
         +123.456,
         0,
         0,
-        [ 'foo', 123, -10.00, true, false, null, 'foo-1', 'foo-2' ],
+        [ 'foo', 123, -10.00, true, false, null, 'foo_1', 'foo_2' ],
         { foo: 123, bar: -10.00, baz: true, qux: [ 'a', 'b', [ 'c', 'd', 'e' ] ] },
         { foo: 123, bar: -10.00, baz: true, qux: [ 'a', 'b', 'c-d-e' ] }
     ];
