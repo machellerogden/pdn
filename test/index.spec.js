@@ -137,3 +137,14 @@ kaes%*'&%-<.'%*t
         t.deepEqual(result, expected[i++]);
     }
 });
+
+test('env reader', async t => {
+    const input = '@env foo';
+    const expected = [ 'bar' ];
+    process.env['foo'] = 'bar';
+    t.plan(expected.length);
+    let i = 0;
+    for await (const result of read(input)) {
+        t.deepEqual(result, expected[i++]);
+    }
+});
