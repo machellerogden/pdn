@@ -148,3 +148,13 @@ test('env reader', async t => {
         t.deepEqual(result, expected[i++]);
     }
 });
+
+test('arn test', async t => {
+    const input = 'arn:aws:lambda:us-east-1:609131769936:function:transaction-dev-update_transaction';
+    const expected = [ 'arn:aws:lambda:us-east-1:609131769936:function:transaction-dev-update_transaction' ];
+    t.plan(expected.length);
+    let i = 0;
+    for await (const result of read(input)) {
+        t.deepEqual(result, expected[i++]);
+    }
+});

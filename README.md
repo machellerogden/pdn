@@ -125,10 +125,6 @@ Tags themselves are not elements. It is an error to have a tag without a corresp
 
 `@obj` before any sequence will transform that sequence into an object representation.
 
-##### @env
-
-`@env` substitutes value of the environment variable with a name matching to proceeding string value.
-
 ##### comments
 
 If a `#` character is encountered outside of a string or symbol, that character and all subsequent characters to the next newline should be ignored.
