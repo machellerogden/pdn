@@ -309,9 +309,7 @@ console.log(await readAll('@join [foo bar baz]', {
 ```
 # TODO
 
-- [ ] support additional escape characters in tokenizer
 - [ ] capture token positions and report in SyntaxError messages
-- [ ] consider t-expression support
 
 # License
 
