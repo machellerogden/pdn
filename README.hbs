@@ -94,8 +94,11 @@ An array is a sequence of values that supports random access. Arrays are represe
 An object is a collection of associations between keys and values. Object are represented by zero or more key and value pairs enclosed in curly braces `{}` or with a special notation using square brackets or parenthese wherein the opening element of the balance group is immediatedly followed by a colon `:`. Each key should appear at most once. No semantics should be associated with the order in which the pairs appear.
 
 ```
+{a 1 foo bar}
 {a 1,foo bar}
+[:a 1 foo bar]
 [:a 1,foo bar]
+(:a 1 foo bar)
 (:a 1,foo bar)
 ```
 
