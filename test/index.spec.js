@@ -158,3 +158,14 @@ test('arn test', async t => {
         t.deepEqual(result, expected[i++]);
     }
 });
+
+test('version string test', async t => {
+    const input = `1.0.0
+1.00`;
+    const expected = [ '1.0.0', 1 ];
+    t.plan(expected.length);
+    let i = 0;
+    for await (const result of read(input)) {
+        t.deepEqual(result, expected[i++]);
+    }
+});
