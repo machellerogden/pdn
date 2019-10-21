@@ -18,7 +18,7 @@ foo
 [:foo 123
   bar :-10.00
   baz : true
-  "qux":[a,b, @join [c,d,e]]]
+  "qux":[a,b, @join [c,d,e], {a @delayed "bar"}]]
 `;
     const expected = [
         'foo',
@@ -28,12 +28,13 @@ foo
         0,
         [ 'foo', 123, -10.00, true, false, null, 'foo_1', 'foo_2' ],
         { foo: 123, bar: -10.00, baz: true, qux: [ 'a', 'b', [ 'c', 'd', 'e' ] ] },
-        { foo: 123, bar: -10.00, baz: true, qux: [ 'a', 'b', 'c-d-e' ] }
+        { foo: 123, bar: -10.00, baz: true, qux: [ 'a', 'b', 'c-d-e', {a: 'foooooo'} ] }
     ];
     t.plan(expected.length);
     let i = 0;
     const readers = {
-        join: el => el.join('-')
+        join: el => el.join('-'),
+        delayed: async el => new Promise(resolve => setTimeout(() => resolve('foooooo'), 1))
     };
     for await (const result of read(input, { readers })) {
         t.deepEqual(result, expected[i++]);
