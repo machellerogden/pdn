@@ -124,9 +124,14 @@ Tags themselves are not elements. It is an error to have a tag without a corresp
 
 ##### built-in tagged elements
 
-##### @obj
+##### @env
 
-`@obj` before any sequence will transform that sequence into an object representation.
+An `@env` tag before any string element resolves to the value of underlying the environment variable with the same name as the given element value.
+
+```
+@env HOME
+# resolves to /Users/kjaneway
+```
 
 ##### comments
 

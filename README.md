@@ -114,7 +114,7 @@ Thus you can build new distinct readable elements out of (and only out of) other
 
 The semantics of a tag, and the type and interpretation of the tagged element are defined by the steward of the tag.
 
-`@mytag {:first "Fred" last "Mertz"}`
+`@mytag {first "Fred" last "Mertz"}`
 
 If a reader encounters a tag for which no handler is registered, the implementation can either report an error, call a designated 'unknown element' handler, or create a well-known generic representation that contains both the tag and the tagged element, as it sees fit. Note that the non-error strategies allow for readers which are capable of reading any and all PDN, in spite of being unaware of the details of any extensions present.
 
@@ -124,9 +124,14 @@ Tags themselves are not elements. It is an error to have a tag without a corresp
 
 ##### built-in tagged elements
 
-##### @obj
+##### @env
 
-`@obj` before any sequence will transform that sequence into an object representation.
+An `@env` tag before any string element resolves to the value of underlying the environment variable with the same name as the given element value.
+
+```
+@env HOME
+# resolves to /Users/kjaneway
+```
 
 ##### comments
 
