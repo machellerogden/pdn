@@ -1,6 +1,6 @@
 {
   "name": "pdn",
-  "version": "0.3.14",
+  "version": "0.3.15",
   "description": "POSIX-friendly Data Notation",
   "bin": "index.js",
   "main": "index.js",
