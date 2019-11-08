@@ -41,6 +41,46 @@ foo
     }
 });
 
+test('argv mode works', async t => {
+    const input = [
+        `foo`,
+        `123`,
+        `123.456`,
+        `+0`,
+        `-0`,
+        `[foo,123,-10.00,true,false,nil,foo^,foo^]`,
+        `[:foo:`,
+        `123`,
+        `bar`,
+        `-10.00`,
+        `baz:true`,
+        `qux[a,b,`, `[c,d,e]]]`,
+        `[:foo`, `123`,
+          `bar`, `:-10.00`,
+          `baz`, `:`, `true`,
+          `qux:[a,b,`, `@join [c,d,e],`, `{a`, `@delayed`, `"bar"}]]`
+    ];
+    const expected = [
+        'foo',
+        123,
+        +123.456,
+        0,
+        0,
+        [ 'foo', 123, -10.00, true, false, null, 'foo_1', 'foo_2' ],
+        { foo: 123, bar: -10.00, baz: true, qux: [ 'a', 'b', [ 'c', 'd', 'e' ] ] },
+        { foo: 123, bar: -10.00, baz: true, qux: [ 'a', 'b', 'c-d-e', {a: 'foooooo'} ] }
+    ];
+    t.plan(expected.length);
+    let i = 0;
+    const readers = {
+        join: el => el.join('-'),
+        delayed: async el => new Promise(resolve => setTimeout(() => resolve('foooooo'), 1))
+    };
+    for await (const result of read(input, { readers, argv: true })) {
+        t.deepEqual(result, expected[i++]);
+    }
+});
+
 test('json', async t => {
     const input = `{"2":true,"2eLa51987":5209,"Hbyn":"jt4eQ6z34KOhlAaaBy","IH395a453aqV3vp4n9kWR9nzMS":-45,"1yR7E6FCzKsHF":116349,"L6X72qaq43fe2P8MPnaOTjx":"G4HHL","47l614742JU289P2cSKoT2lz77L":-903089785.000234,"R1i5aB14z6kljN":true,"g51ju":true,"Yq1JyKWK459HK2":"3qN81QYMuXdrNUszO5STkT","Kk9TnebSKViPfT2KBLPs8Qit3m":true,"2m9hrV4ucd3Czkp7eyKad6A":"mWV42h9k97Q997gmUMaJ5kB9","eqD51J372v3QVI":"6GvCDj1Pq347DaqB6","qhuD21HR27FoBcl3c6i9Tzc37f1":true}
 {'M61l93S8wC8"rMufUWIMK':"5o7g2C93tu5PgP","FlY11bVrhgeVIT2aS2P37NAvUC5fK8":null}
